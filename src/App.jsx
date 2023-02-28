@@ -18,13 +18,23 @@ function App() {
 
   useEffect(() => {
     setInterval(() => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLat(position.coords.latitude);
-        setLng(position.coords.longitude);
-        setCenter([position.coords.latitude, position.coords.longitude]);
-        console.log("Ubicacion actualizada");
-      });
-    }, 100);
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLat(position.coords.latitude);
+          setLng(position.coords.longitude);
+          setCenter([position.coords.latitude, position.coords.longitude]);
+          console.log("Ubicacion actualizada");
+        },
+        (error) => {
+          console.log(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        }
+      );
+    }, 1000);
   }, []);
 
   const MarcadorUbicacion = () => {
