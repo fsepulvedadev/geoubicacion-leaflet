@@ -10,6 +10,8 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import Icono from "./assets/icono.svg";
+import IconLocation from "./components/IconLocation";
 
 function App() {
   const [lat, setLat] = useState(0);
@@ -73,7 +75,7 @@ function App() {
       <MapContainer center={center} zoom={13} scrollWheelZoom={true}>
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {lat && lng && (
-          <Marker position={[lat, lng]}>
+          <Marker position={[lat, lng]} icon={IconLocation}>
             <Popup>
               A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
