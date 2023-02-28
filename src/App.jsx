@@ -12,11 +12,15 @@ import {
 import "leaflet/dist/leaflet.css";
 import Icono from "./assets/icono.svg";
 import IconLocation from "./components/IconLocation";
+import Camera from "react-html5-camera-photo";
+import "react-html5-camera-photo/build/css/index.css";
 
 function App() {
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
   const [center, setCenter] = useState([-38.9480448, -68.0624128]);
+  const [arboles, setArboles] = useState([]);
+  const [captura, setCaptura] = useState(null);
 
   useEffect(() => {
     setInterval(() => {
@@ -28,7 +32,7 @@ function App() {
           console.log("Ubicacion actualizada");
         },
         (error) => {
-          console.log(error);
+          throw error;
         },
         {
           enableHighAccuracy: true,
@@ -67,8 +71,23 @@ function App() {
     setCenter([40.4168, -3.7038]);
   };
 
+  const agregarArbol = () => {
+    const newArbol = {
+      id: arboles.length + 1,
+      lat: lat,
+      lng: lng,
+    };
+  };
+
+  const handleTakePhoto = (data) => {
+    setCaptura(data);
+    console.log(captura);
+  };
+
   return (
     <div className="App">
+      <Camera onTakePhoto={(data) => handleTakePhoto(data)} />
+      {captura && <img src={captura} />}
       <button onClick={mostrarGeo}>Click</button>
       <h1>Longitud: {lng}</h1>
       <h1>Latitud: {lat}</h1>
