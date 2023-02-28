@@ -21,6 +21,7 @@ function App() {
   const [center, setCenter] = useState([-38.9480448, -68.0624128]);
   const [arboles, setArboles] = useState([]);
   const [captura, setCaptura] = useState(null);
+  const [mostrarCamara, setMostrarCamara] = useState(false);
 
   useEffect(() => {
     setInterval(() => {
@@ -81,13 +82,23 @@ function App() {
 
   const handleTakePhoto = (data) => {
     setCaptura(data);
+    setMostrarCamara(false);
     console.log(captura);
   };
 
   return (
     <div className="App">
-      <Camera onTakePhoto={(data) => handleTakePhoto(data)} />
-      {captura && <img src={captura} />}
+      {captura && !mostrarCamara ? (
+        <div>
+          <img src={captura} />
+          <button onClick={() => setMostrarCamara(!mostrarCamara)}>
+            Mostrar camara
+          </button>
+        </div>
+      ) : (
+        <Camera onTakePhoto={(data) => handleTakePhoto(data)} />
+      )}
+
       <button onClick={mostrarGeo}>Click</button>
       <h1>Longitud: {lng}</h1>
       <h1>Latitud: {lat}</h1>
