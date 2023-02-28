@@ -96,7 +96,10 @@ function App() {
           </button>
         </div>
       ) : (
-        <Camera onTakePhoto={(data) => handleTakePhoto(data)} />
+        <Camera
+          onTakePhoto={(data) => handleTakePhoto(data)}
+          idealFacingMode={"environment"}
+        />
       )}
 
       <button onClick={mostrarGeo}>Click</button>
