@@ -1,121 +1,23 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  useMap,
-  Marker,
-  Popup,
-  useMapEvent,
-  useMapEvents,
-} from "react-leaflet";
+import fondo from "./assets/fondo.jpg";
 import "leaflet/dist/leaflet.css";
-import Icono from "./assets/icono.svg";
-import IconLocation from "./components/IconLocation";
-import Camera from "react-html5-camera-photo";
-import "react-html5-camera-photo/build/css/index.css";
+import { Link } from "react-router-dom";
 
 function App() {
-  const [lat, setLat] = useState(0);
-  const [lng, setLng] = useState(0);
-  const [center, setCenter] = useState([-38.9480448, -68.0624128]);
-  const [arboles, setArboles] = useState([]);
-  const [captura, setCaptura] = useState(null);
-  const [mostrarCamara, setMostrarCamara] = useState(false);
-
-  useEffect(() => {
-    setInterval(() => {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLat(position.coords.latitude);
-          setLng(position.coords.longitude);
-          setCenter([position.coords.latitude, position.coords.longitude]);
-          console.log("Ubicacion actualizada");
-        },
-        (error) => {
-          throw error;
-        },
-        {
-          enableHighAccuracy: true,
-          timeout: 5000,
-          maximumAge: 0,
-        }
-      );
-    }, 1000);
-  }, []);
-
-  const MarcadorUbicacion = () => {
-    const map = useMapEvents({
-      click: (e) => {
-        map.locate();
-      },
-      locationfound: (e) => {
-        setLat(e.latitude);
-        setLng(e.longitude);
-        setCenter([e.latitude, e.longitude]);
-        map.flyTo(e.latlng, map.getZoom());
-      },
-    });
-  };
-
-  const mostrarGeo = () => {
-    const newLat = lat + 0.00001;
-    const newLng = lng + 0.00001;
-
-    setLat(newLat);
-    setLng(newLng);
-  };
-
-  const cambiarUbi = (lng, lat) => {
-    setLat(lat);
-    setLng(lng);
-    setCenter([40.4168, -3.7038]);
-  };
-
-  const agregarArbol = () => {
-    const newArbol = {
-      id: arboles.length + 1,
-      lat: lat,
-      lng: lng,
-    };
-  };
-
-  const handleTakePhoto = (data) => {
-    setCaptura(data);
-    setMostrarCamara(false);
-    console.log(captura);
-  };
-
   return (
-    <div className="App">
-      {captura && !mostrarCamara ? (
-        <div>
-          <img src={captura} />
-          <button onClick={() => setMostrarCamara(!mostrarCamara)}>
-            Mostrar camara
-          </button>
-        </div>
-      ) : (
-        <Camera
-          onTakePhoto={(data) => handleTakePhoto(data)}
-          idealFacingMode={"environment"}
-        />
-      )}
-
-      <button onClick={mostrarGeo}>Click</button>
-      <h1>Longitud: {lng}</h1>
-      <h1>Latitud: {lat}</h1>
-      <MapContainer center={center} zoom={13} scrollWheelZoom={true}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {lat && lng && (
-          <Marker position={[lat, lng]} icon={IconLocation}>
-            <Popup>
-              A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-          </Marker>
-        )}
-        <MarcadorUbicacion />
-      </MapContainer>
+    <div className="App h-screen w-screen flex flex-col justify-center items-center ">
+      <img src={fondo} className=" h-screen absolute -z-20" alt="" srcset="" />
+      <div className="flex flex-col items-center justify-center p-2 w-10/12 rounded backdrop-blur-lg">
+        <h1 className="text-2xl text-center font-bold text-emerald-700">
+          Bienvenido al registrador de Arbolado!
+        </h1>
+        <Link
+          to={"/inicio"}
+          className="p-4 bg-emerald-500 hover:bg-emerald-600 text-white mt-10 shadow-xl rounded font-bold"
+        >
+          Comenzar
+        </Link>
+      </div>
     </div>
   );
 }
