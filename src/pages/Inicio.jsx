@@ -99,7 +99,11 @@ const Inicio = () => {
   return (
     <div>
       <MapContainer center={center} zoom={13} scrollWheelZoom={true}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer
+          maxNativeZoom={18}
+          maxZoom={30}
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
         {lat && lng && (
           <Marker position={[lat, lng]} icon={IconLocation}>
             <Popup>

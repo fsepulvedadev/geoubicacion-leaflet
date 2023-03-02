@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="bg-emerald-600 h-[8vh] grid grid-cols-3 place-content-center text-white">
+    <div className="bg-emerald-600 h-[8vh] grid grid-cols-3 place-content-center text-white absolute w-full bottom-0">
       <Link to={"/inicio"} className="flex items-center justify-center">
         <IoHomeOutline className="text-3xl" />
       </Link>
